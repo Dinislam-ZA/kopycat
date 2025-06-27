@@ -352,7 +352,7 @@ You should see the file `testfile` with content: `test test test`.
 ### 3.2 Network
 To test networking, bring up a virtual TAP interface on the host with the port specified in the emulator launch parameters:
 ```
-sudo socat -d -d tcp-listen:30003,reuseaddr,fork,keepalive,tun:192.168.19.2/24,tun-type=tap,iff-up,iff-no-pi &
+sudo socat tun:192.168.19.2/24,tun-type=tap,iff-up,iff-no-pi tcp-listen:30003
 ```
 On Windows, this can be done using WSL and port forwarding.  
 In Windows PowerShell:
@@ -368,7 +368,7 @@ PS New-NetFirewallRule -DisplayName "WSL PortProxy 30003" `
 ```
 In WSL:
 ```
-sudo socat -d -d tcp-listen:30003,reuseaddr,fork,keepalive,tun:192.168.19.2/24,tun-type=tap,iff-up,iff-no-pi &
+sudo socat tun:192.168.19.2/24,tun-type=tap,iff-up,iff-no-pi tcp-listen:30003
 ```
 >**_NOTE:_** Make sure all these steps are completed **before launching the emulator**.
 
