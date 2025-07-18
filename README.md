@@ -2,11 +2,12 @@
 
 [Читать на русском](README-ru.md)
 
-# Description
+# About the project
+## Description
 
 **Kopycat** is a multi-processor architectures system and user-level (with VEOS module) emulator.
 
-Main features are:
+**Main features** are:
 
 - Easy to assemble a new device. Configure your own platform using Kotlin.
 - Easy to customize. Create your own platform-module using Kotlin.
@@ -21,14 +22,35 @@ This project contains:
 
 **MCUs:** Cortex-M0, STM32F0xx, MSP430x44x, PIC32MZ, P2020, Atom 2758, ElanSC520
 
----
+## Origin
+The history of the project began with the need to emulate a device with a rare processor architecture.  
+At that time, existing platforms for emulating hardware devices (like QEMU) did not support this architecture.  
+There were two ways to solve the problem:
+1. Modifying existing software.
+2. Building our own solution.
 
-# Prerequisites
-To use Kopycat, ensure you have the following installed:
-- **Java Development Kit (JDK) 11**
-- **Socat**: For terminal interaction
-- **Git**
-- **Docker or Podman** (optional)
+We decided to go with the second option.
+
+Besides emulating the target architecture, the Kopycat project had other goals to make emulating specific devices easier in the future, such as:
+- *Easy development*: To make it simple to add new architectures and modules, we chose Kotlin as the programming language because it has many helpful syntax features.
+- *Advanced interaction tools*: Kopycat includes tools for flexible interaction with the emulation process. For example, it has "tracers" that describe the logic executed for each assembly instruction of the device. With these, you can, for example, build a call stack for a program without its source code or even change how the emulator works.
+- *Integration with other tools*: To allow Kopycat to work with other software, we added remote procedure call (rpc) and REST API protocols.  
+
+Of course, using the JVM together with tracers and other extra emulator features affects its speed. That’s why another important feature is creating "snapshots"—saved states that let you restart the emulator from a specific point.
+
+## Architecture
+Kopycat has a modular architecture, which makes it quick to create an emulator for any hardware platform.  
+The modules form a hierarchy of components, where the emulated device is called the top module.  
+The modules interact with each other using a bus architecture. Buses, in turn, connect to modules through ports.  
+Here’s an example of a simple architecture:  
+![](images/simple_device_example.png)
+
+This approach lets you describe a device’s architecture in a way that matches its physical block diagram during development.
+
+The top module is initialized in an instance of the Kopycat class. A Kotlin console is provided to manage the emulator.  
+Protocols like gdb, rest, and rpc are also available. To allow connections to the emulated device’s system, the UartNetworkTerminal class is used.  
+Overall, the virtual device and its interaction with the main operating system can be shown in this diagram:  
+![](images/kopycat_top_structure_scheme.png)
 
 ___
 
@@ -44,6 +66,15 @@ Fast overview:
 
 ___
 
+## Prerequisites
+To use Kopycat, ensure you have the following installed:
+- **Java Development Kit (JDK) 11**
+- **Socat**: For terminal interaction
+- **Git**
+- **Docker or Podman** (optional)
+
+___
+
 ## 1. Preparing the Distribution using Buildroot
 **Buildroot** is a tool that simplifies and automates the process of building a complete Linux system for embedded devices using cross-compilation.
 
@@ -52,6 +83,8 @@ You can configure the toolchain and kernel via `make menuconfig` and `make linux
 After configuration and build, the artifacts will be located in the `./output/images` directory.
 
 For more information, refer to the official documentation — [Buildroot - Making Embedded Linux Easy](https://buildroot.org/docs.html)
+
+___
 
 ### Building the Kernel for kopycat x86 (Version 0.11.0+)
 Inside the `./kopycat-modules/tops/demolinux/src/main/buildroot` directory, you'll find a `Containerfile` to build an image using Buildroot with a preconfigured Linux kernel for x86. You can use either Docker or Podman (commands are similar).
