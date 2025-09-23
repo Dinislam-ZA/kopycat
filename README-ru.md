@@ -182,13 +182,14 @@ mv buildroot-2023.11.1 buildroot-unpacked
 5. **Запустите эмулятор с помощью скрипта**
 
    Перед запуском эмулятора, убедитесь, что у вас есть все необходимые для работы ресурсы (ядро и rootfs для demolinux).
-   Они должны находиться в директории `./kopycat-modules/**/src/main/resources/**/binaries` модуля или в `.
-   /kopycat/resources/**/binaries` (если их нет, создайте их по инструкции в [первом пункте руководства](#1-подготовка-дистрибутива-при-помощи-buildroot) 
+   Они должны находиться в директории ресурсов модуля `./kopycat-modules/tops/demolinux/src/main/resources/**/binaries` 
+   или в `./kopycat/resources/**/binaries` (если их нет, создайте их по инструкции в [первом пункте руководства](#1-подготовка-дистрибутива-при-помощи-buildroot) 
    и перенесите в директорию `./kopycat-modules/**/src/main/resources/**/binaries`). Первая директория будет 
    использоваться, чтобы положить ядро в jar во время сборки, а вторая, чтобы получить его во время выполнения программы.
+
    Запустите скрипт:
     ```bash
-    ./kopycat-private/temp/config/bash/demolinux-default.sh
+    ./kopycat/temp/config/bash/demolinux-default.sh
     ```
    >**_Примечание:_** Также, стоит учесть, что для demolinux_x86, например, Kopycat по-умолчанию ищет ядро и rootfs как "bzImage.gz" и "rootfs.cpio.gz". Если вы хотите переопределить названия ресурсов (например, чтобы использовать их без сжатия), вы можете добавить их в параметры топ-модуля в команде запуска программы `-p "...,bzImageName=bzImage,initRdName=rootfs.cpio"`
    
@@ -269,14 +270,14 @@ mv buildroot-2023.11.1 buildroot-unpacked
 5. **Запустите эмулятор с помощью PowerShell-скрипта**
 
    Перед запуском эмулятора, убедитесь, что у вас есть все необходимые для работы ресурсы (ядро и rootfs для demolinux).
-   Они должны находиться в директории `./kopycat-modules/**/src/main/resources/**/binaries` модуля или в `.
-   /kopycat/resources/**/binaries` (если их нет, создайте их по инструкции в [первом пункте руководства](#1-подготовка-дистрибутива-при-помощи-buildroot)
+   Они должны находиться в директории ресурсов модуля `./kopycat-modules/tops/demolinux/src/main/resources/**/binaries`
+   или в `./kopycat/resources/**/binaries` (если их нет, создайте их по инструкции в [первом пункте руководства](#1-подготовка-дистрибутива-при-помощи-buildroot)
    и перенесите в директорию `./kopycat-modules/**/src/main/resources/**/binaries`). Первая директория будет
    использоваться, чтобы положить ядро в jar во время сборки, а вторая, чтобы получить его во время выполнения программы.
 
    Запустите скрипт:
    ```powershell
-   .\kopycat-private\temp\config\powershell\demolinux-default.ps1
+   .\kopycat\temp\config\powershell\demolinux-default.ps1
    ```
 
    >**_Примечание:_** Также, стоит учесть, что для demolinux_x86, например, Kopycat по-умолчанию ищет ядро и rootfs как "bzImage.gz" и "rootfs.cpio.gz". Если вы хотите переопределить названия ресурсов (например, чтобы использовать их без сжатия), вы можете добавить их в параметры топ-модуля в команде запуска программы `-p "...,bzImageName=bzImage,initRdName=rootfs.cpio"`
